@@ -1,8 +1,16 @@
-import React from 'react'
-import { IconButton, Avatar } from '@material-ui/core';
+import React from "react";
+import { IconButton, Avatar } from "@material-ui/core";
 import { DonutLarge, Chat, MoreVert, SearchOutlined } from "@material-ui/icons";
-import { SidebarContainer, SidebarHeader, SidebarIcons, SearchBarContainer, SearchBarWrapper, SearchInput, NewChatContainer } from './style';
-import SidebarChat from './SidebarChat';
+import {
+  SidebarContainer,
+  SidebarHeader,
+  SidebarIcons,
+  SearchBarContainer,
+  SearchBarWrapper,
+  SearchInput,
+  NewChatContainer,
+} from "./style";
+import SidebarChat from "./SidebarChat";
 
 export default function Sidebar() {
   return (
@@ -11,13 +19,13 @@ export default function Sidebar() {
         <Avatar src="https://avatars.githubusercontent.com/burak-selvi" />
         <SidebarIcons>
           <IconButton>
-            <DonutLarge style={styles.headerIcons} />
+            <DonutLarge />
           </IconButton>
           <IconButton>
-            <Chat style={styles.headerIcons} />
+            <Chat />
           </IconButton>
           <IconButton>
-            <MoreVert style={styles.headerIcons} />
+            <MoreVert />
           </IconButton>
         </SidebarIcons>
       </SidebarHeader>
@@ -33,15 +41,12 @@ export default function Sidebar() {
         <SidebarChat />
       </NewChatContainer>
     </SidebarContainer>
-  )
+  );
 }
 
 const styles = {
-  headerIcons: {
-    marginRight: '2vw'
-  },
   searchIcon: {
-    color: 'gray',
-    padding: '10px'
-  }
-}
+    color: "gray",
+    padding: "10px",
+  },
+};
