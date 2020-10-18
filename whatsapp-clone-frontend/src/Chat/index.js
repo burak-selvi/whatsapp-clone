@@ -1,9 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Avatar, IconButton } from '@material-ui/core';
 import { SearchOutlined, AttachFile, MoreVert, InsertEmoticon } from '@material-ui/icons';
 import { ChatContainer, ChatHeader, ChatHeaderInfo, ChatHeaderTitle, ChatHeaderText, ChatHeaderIcons, ChatBody, ChatMessage, ChatMessageName, ChatMessageTime, ChatFooter, SendMessageForm, SendMessageInput, SendMessageButton } from './style';
+import axios from '../axios';
 
-export default function Chat() {
+export default function Chat({messages}) {
+  const [input, setInput] = useState('');
+  const handleSendMessage = async(event) => {
+    event.preventDefault();
+    await axios.post('/messages/new', {
+      name: 'Burak',
+      message: input,
+      timestamp: 'Just now',
+      received: true
+    });
+    setInput('');
+  }
+
   return (
     <ChatContainer>
       <ChatHeader>
@@ -29,38 +42,24 @@ export default function Chat() {
         </ChatHeaderIcons>
       </ChatHeader>
       <ChatBody>
-        <ChatMessage>
+        {messages.map(message => {
+          return (
+            <ChatMessage receiver={message.received}>
           <ChatMessageName>
-            Burak
+            {message.name}
         </ChatMessageName>
-        This is a message
+        {message.message}
         <ChatMessageTime>
-            {new Date().toUTCString()}
+            {message.timestamp}
           </ChatMessageTime>
         </ChatMessage>
-        <ChatMessage receiver>
-          <ChatMessageName>
-            You
-        </ChatMessageName>
-        This is a second message
-        <ChatMessageTime>
-            {new Date().toUTCString()}
-          </ChatMessageTime>
-        </ChatMessage>
-        <ChatMessage>
-          <ChatMessageName>
-            Burak
-        </ChatMessageName>
-        This is a third   message
-        <ChatMessageTime>
-            {new Date().toUTCString()}
-          </ChatMessageTime>
-        </ChatMessage>
+          )
+        })}
       </ChatBody>
       <ChatFooter>
         <InsertEmoticon style={{ padding: '10px', color: 'gray' }} />
-        <SendMessageForm>
-          <SendMessageInput type="text" placeholder="Type a message" />
+        <SendMessageForm onSubmit={handleSendMessage}>
+          <SendMessageInput value={input} onChange={(e)=>setInput(e.target.value)} type="text" placeholder="Type a message" />
           <SendMessageButton type="submit">
             Send a message
         </SendMessageButton>
